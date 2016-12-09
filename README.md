@@ -6,3 +6,5 @@ From the pendo_challenge folder, you should be able to bundle install all of the
 Once set up, you should be able to run the automation test when residing in the pendo_challenge folder using the command below:
 
       cucumber features/challenge.feature 
+
+This was coded/tested using a Chrome browser.
