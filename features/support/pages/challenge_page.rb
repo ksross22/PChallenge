@@ -95,7 +95,7 @@ class ChallengePage
   end
 
   def verify_note_saved
-    sleep 5
+    sleep 2
     bubble = @browser.find_element(:class => 'gko-c-n')
 
     fail unless bubble.find_element(:class => '_-j').text.include? "Note saved for"
