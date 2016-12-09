@@ -13,4 +13,5 @@ Scenario: Save to Short List
   When I see the "Shopping" results page
   And I choose result number "4"
   And I click "Save to Short list"
-  Then I add a note "Please buy me"
+  And I add a note "Please buy me"
+  Then I should see it succesfully added
