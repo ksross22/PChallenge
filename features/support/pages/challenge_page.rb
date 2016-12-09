@@ -35,6 +35,8 @@ class ChallengePage
   span(:saved_note_text, :class => 'jNm5if')
   div(:shortlist_page, :class => 'l4eHX-iJ4yB')
 
+  #have to sign into google in order to save to short list
+  #login creds are in config file
   def sign_in_to_google
     sign_in_element.when_visible.click
 
@@ -49,6 +51,7 @@ class ChallengePage
     signin_button
   end
 
+  #enter in search item into google and hit enter when complete
   def search_google(text)
     search_box_element.when_visible
     self.search_box = text
@@ -57,12 +60,14 @@ class ChallengePage
     results_bar_element.when_visible
   end
 
+  #navigate to tabs based on link name
   def navigate_tabs(tab)
     nav_tab = @browser.find_element(:link_text => "#{tab}")
     nav_tab.click
     shopping_section_element.when_visible
   end
 
+  #given a number find the shopping item
   def find_result_by_number(num)
     n_index = num.to_i-1
     sleep 2
@@ -72,6 +77,7 @@ class ChallengePage
     $name_of_item = name_of_item.gsub!(/[^0-9A-Za-z]/, "")
   end
 
+  #save item to shortlist
   def save_to_short_list
     short_list_button_element.when_visible.click
     sleep 3
@@ -81,6 +87,7 @@ class ChallengePage
     fail unless bubble.find_element(:class => '_-j').text.include? "Saved to your default Shortlist"
   end
 
+  #choose an action: currently only "add note" but open to adding more
   def saved_actions(action)
     if action == "Add note"
       bubble = @browser.find_element(:class => 'gko-c-s')
@@ -88,12 +95,15 @@ class ChallengePage
     end
   end
 
+  #write the note
   def note_text(text)
     bubble = @browser.find_element(:class => "gko-c-s")
     bubble.find_element(:class => 'gko-c-ni').send_keys text
     bubble.find_element(:class => 'jfk-button-action').click
   end
 
+  #make sure the note saved
+  #also comparing the name of the product with the name on the note save
   def verify_note_saved
     sleep 2
     bubble = @browser.find_element(:class => 'gko-c-n')
@@ -105,6 +115,7 @@ class ChallengePage
     fail unless text_of_verify == $name_of_item
   end
 
+  #reviewing the note on the shortlist page
   def review_note(text)
     sleep 2
 
@@ -117,6 +128,7 @@ class ChallengePage
 
   end
 
+  #clearing the shortlist at the end of every run to avoid false negatives
   def reset_shortlist
     @browser.navigate.back
     shopping_section_element.when_visible
